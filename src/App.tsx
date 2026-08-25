@@ -1,9 +1,11 @@
-function App() {
+import { RouterProvider } from "react-router";
+import { Providers } from "./presentation/app/providers.js";
+import { router } from "./presentation/app/router.js";
 
-
+export default function App() {
   return (
-    <h1>The Amazing Cine</h1>
-  )
+    <Providers>
+      <RouterProvider router={router} />
+    </Providers>
+  );
 }
-
-export default App
