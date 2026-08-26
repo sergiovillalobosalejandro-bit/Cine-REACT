@@ -12,7 +12,12 @@ export const TmdbMovieSchema = z.object({
   overview: z.string().nullable(),
   poster_path: z.string().nullable(),
   release_date: z.string().nullable(),
-  runtime: z.number().nullable(),
+  // TMDB solo incluye "runtime" en el endpoint de detalle de una pelicula
+  // (/movie/:id). Los endpoints de listado (/trending, /discover, /search)
+  // no traen esta clave: no es null, directamente no esta. Por eso va
+  // .optional() ademas de .nullable() -- createMovie() en el dominio ya
+  // acepta number | null | undefined.
+  runtime: z.number().nullable().optional(),
   genres: z
     .array(z.object({ id: z.number(), name: z.string() }).nullable())
     .optional(),
