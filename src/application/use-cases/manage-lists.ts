@@ -1,3 +1,4 @@
+import type { Movie } from "../../domain/movie.js";
 import type {
   LibraryRepository,
   MovieList,
@@ -45,17 +46,17 @@ export async function updateList(
 export async function addMovieToList(
   libraryRepository: LibraryRepository,
   listId: string,
-  movieId: number,
+  movie: Movie,
 ): Promise<void> {
   if (!listId || listId.trim() === "") {
     throw new Error("List ID cannot be empty");
   }
 
-  if (movieId <= 0) {
+  if (movie.id <= 0) {
     throw new Error("Invalid movie ID");
   }
 
-  await libraryRepository.addToList(listId.trim(), movieId);
+  await libraryRepository.addToList(listId.trim(), movie);
 }
 
 export async function removeMovieFromList(

@@ -11,6 +11,21 @@ import type {
   LibraryRepository,
   MovieList,
 } from "../ports/library-repository.js";
+import type { Movie } from "../../domain/movie.js";
+
+const testMovie: Movie = {
+  id: 1,
+  title: "Test Movie",
+  originalTitle: null,
+  overview: null,
+  posterPath: null,
+  releaseDate: null,
+  runtime: null,
+  genres: [],
+  budget: null,
+  status: { kind: "unknown" },
+  rating: { kind: "no-votes" },
+};
 
 describe("manage-lists", () => {
   describe("getAllLists", () => {
@@ -292,9 +307,9 @@ describe("manage-lists", () => {
         deleteList: async () => {},
       };
 
-      await addMovieToList(mockRepository, "list-1", 1);
+      await addMovieToList(mockRepository, "list-1", testMovie);
 
-      expect(mockAdd).toHaveBeenCalledWith("list-1", 1);
+      expect(mockAdd).toHaveBeenCalledWith("list-1", testMovie);
     });
 
     it("should trim list ID", async () => {
@@ -327,9 +342,9 @@ describe("manage-lists", () => {
         deleteList: async () => {},
       };
 
-      await addMovieToList(mockRepository, "  list-1  ", 1);
+      await addMovieToList(mockRepository, "  list-1  ", testMovie);
 
-      expect(mockAdd).toHaveBeenCalledWith("list-1", 1);
+      expect(mockAdd).toHaveBeenCalledWith("list-1", testMovie);
     });
 
     it("should throw error for empty list ID", async () => {
@@ -363,9 +378,9 @@ describe("manage-lists", () => {
         deleteList: async () => {},
       };
 
-      await expect(addMovieToList(mockRepository, "", 1)).rejects.toThrow(
-        "List ID cannot be empty",
-      );
+      await expect(
+        addMovieToList(mockRepository, "", testMovie),
+      ).rejects.toThrow("List ID cannot be empty");
     });
 
     it("should throw error for invalid movie ID", async () => {
@@ -399,9 +414,9 @@ describe("manage-lists", () => {
         deleteList: async () => {},
       };
 
-      await expect(addMovieToList(mockRepository, "list-1", 0)).rejects.toThrow(
-        "Invalid movie ID",
-      );
+      await expect(
+        addMovieToList(mockRepository, "list-1", { ...testMovie, id: 0 }),
+      ).rejects.toThrow("Invalid movie ID");
     });
   });
 

@@ -390,7 +390,7 @@ export function MovieDetailPage() {
                 disabled={!selectedListId || addToListMutation.isPending}
                 onClick={() => {
                   addToListMutation.mutate(
-                    { listId: selectedListId, movieId: movie.id },
+                    { listId: selectedListId, movie },
                     {
                       onSuccess: () => {
                         setIsListModalOpen(false);

@@ -16,6 +16,8 @@ const mockMovie: Movie = {
   rating: { kind: "no-votes" },
 };
 
+const mockMovie2: Movie = { ...mockMovie, id: 2, title: "Test Movie 2" };
+
 describe("LocalLibraryRepository", () => {
   const createFreshRepository = () => {
     globalThis.localStorage.clear();
@@ -194,7 +196,7 @@ describe("LocalLibraryRepository", () => {
     it("should add movie to list", async () => {
       const repository = createFreshRepository();
       const list = await repository.createList("Favorites");
-      await repository.addToList(list.id, 1);
+      await repository.addToList(list.id, mockMovie);
 
       const updatedList = (await repository.getLists())[0]!;
       expect(updatedList.movieIds).toContain(1);
@@ -203,9 +205,9 @@ describe("LocalLibraryRepository", () => {
     it("should update updatedAt when adding movie", async () => {
       const repository = createFreshRepository();
       const list = await repository.createList("Favorites");
-      await repository.addToList(list.id, 1);
+      await repository.addToList(list.id, mockMovie);
       await new Promise((resolve) => setTimeout(resolve, 10));
-      await repository.addToList(list.id, 2);
+      await repository.addToList(list.id, mockMovie2);
       const stored = JSON.parse(
         globalThis.localStorage.getItem("cineteca-library-v1")!,
       );
@@ -216,19 +218,19 @@ describe("LocalLibraryRepository", () => {
     it("should not add duplicate movie to list", async () => {
       const repository = createFreshRepository();
       const list = await repository.createList("Favorites");
-      await repository.addToList(list.id, 1);
+      await repository.addToList(list.id, mockMovie);
       const afterFirst = (await repository.getLists())[0]!;
       expect(afterFirst.movieIds).toHaveLength(1);
-      await repository.addToList(list.id, 1);
+      await repository.addToList(list.id, mockMovie);
       const afterSecond = (await repository.getLists())[0]!;
       expect(afterSecond.movieIds).toHaveLength(1);
     });
 
     it("should throw error when list not found", async () => {
       const repository = createFreshRepository();
-      await expect(repository.addToList("non-existent", 1)).rejects.toThrow(
-        "List not found",
-      );
+      await expect(
+        repository.addToList("non-existent", mockMovie),
+      ).rejects.toThrow("List not found");
     });
   });
 
@@ -236,7 +238,7 @@ describe("LocalLibraryRepository", () => {
     it("should remove movie from list", async () => {
       const repository = createFreshRepository();
       const list = await repository.createList("Favorites");
-      await repository.addToList(list.id, 1);
+      await repository.addToList(list.id, mockMovie);
       await repository.removeFromList(list.id, 1);
 
       const updatedList = (await repository.getLists())[0]!;
@@ -246,8 +248,8 @@ describe("LocalLibraryRepository", () => {
     it("should update updatedAt when removing movie", async () => {
       const repository = createFreshRepository();
       const list = await repository.createList("Favorites");
-      await repository.addToList(list.id, 1);
-      await repository.addToList(list.id, 2);
+      await repository.addToList(list.id, mockMovie);
+      await repository.addToList(list.id, mockMovie2);
       await repository.removeFromList(list.id, 1);
       const stored = JSON.parse(
         globalThis.localStorage.getItem("cineteca-library-v1")!,
@@ -322,7 +324,10 @@ describe("LocalLibraryRepository", () => {
       const repository = createFreshRepository();
       await repository.save(mockMovie);
       await repository.createList("Favorites");
-      await repository.addToList((await repository.getLists())[0]!.id, 1);
+      await repository.addToList(
+        (await repository.getLists())[0]!.id,
+        mockMovie,
+      );
 
       const stored = JSON.parse(
         globalThis.localStorage.getItem("cineteca-library-v1")!,

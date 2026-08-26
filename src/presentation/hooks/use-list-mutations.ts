@@ -8,8 +8,6 @@ import {
   removeMovieFromList,
 } from "../../application/use-cases/manage-lists.js";
 import type { Movie } from "../../domain/movie.js";
-import { createMovieStatus } from "../../domain/movie-status.js";
-import { createRating } from "../../domain/rating.js";
 import type { MovieList } from "../../application/ports/library-repository.js";
 
 export function useCreateList() {
@@ -72,14 +70,16 @@ export function useAddMovieToList() {
   return useMutation<
     void,
     Error,
-    { listId: string; movieId: number },
+    { listId: string; movie: Movie },
     ListMutationContext
   >({
-    onMutate: async ({ listId, movieId }) => {
+    onMutate: async ({ listId, movie }) => {
       await queryClient.cancelQueries({ queryKey: ["library-lists"] });
       await queryClient.cancelQueries({ queryKey: ["library-list", listId] });
       await queryClient.cancelQueries({ queryKey: ["list-movies"] });
-      await queryClient.cancelQueries({ queryKey: ["movie-details", movieId] });
+      await queryClient.cancelQueries({
+        queryKey: ["movie-details", movie.id],
+      });
 
       const previousLists = queryClient.getQueryData<MovieList[]>([
         "library-lists",
@@ -94,35 +94,20 @@ export function useAddMovieToList() {
           list.id === listId
             ? {
                 ...list,
-                movieIds: [...list.movieIds, movieId],
+                movieIds: [...list.movieIds, movie.id],
                 updatedAt: new Date(),
               }
             : list,
         ),
       );
 
+      // A diferencia de antes, ya tenemos la pelicula completa: la
+      // actualizacion optimista usa sus datos reales (titulo, poster...)
+      // en vez de un relleno vacio que se veia mal hasta que la query
+      // revalidaba.
       queryClient.setQueryData<Movie[]>(["list-movies", listId], (old = []) => {
-        if (old.some((m) => m.id === movieId)) return old;
-        return [
-          ...old,
-          // Placeholder optimista: la pelicula real llega cuando la query
-          // se revalida. Usamos las fabricas del dominio en vez de escribir
-          // los estados a mano: Rating no tiene variante "unknown", y el
-          // casteo "as Movie" que habia antes ocultaba justamente eso.
-          {
-            id: movieId,
-            title: "",
-            originalTitle: null,
-            overview: null,
-            posterPath: null,
-            releaseDate: null,
-            runtime: null,
-            genres: [],
-            budget: null,
-            status: createMovieStatus(null),
-            rating: createRating(null, null),
-          },
-        ];
+        if (old.some((m) => m.id === movie.id)) return old;
+        return [...old, movie];
       });
 
       return { previousLists, previousListMovies };
@@ -140,16 +125,18 @@ export function useAddMovieToList() {
       }
     },
 
-    onSettled: (_data, _error, { listId, movieId }) => {
+    onSettled: (_data, _error, { listId, movie }) => {
       queryClient.invalidateQueries({ queryKey: ["library-lists"] });
       queryClient.invalidateQueries({ queryKey: ["library-list", listId] });
       queryClient.invalidateQueries({ queryKey: ["list-movies"] });
-      queryClient.invalidateQueries({ queryKey: ["movie-details", movieId] });
+      queryClient.invalidateQueries({
+        queryKey: ["movie-details", movie.id],
+      });
       queryClient.invalidateQueries({ queryKey: ["library-saved-movies"] });
     },
 
-    mutationFn: ({ listId, movieId }: { listId: string; movieId: number }) =>
-      addMovieToList(libraryRepository, listId, movieId),
+    mutationFn: ({ listId, movie }: { listId: string; movie: Movie }) =>
+      addMovieToList(libraryRepository, listId, movie),
   });
 }
 

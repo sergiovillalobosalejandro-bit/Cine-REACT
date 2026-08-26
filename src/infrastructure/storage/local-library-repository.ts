@@ -7,7 +7,35 @@ import type {
 
 const LIBRARY_KEY = "cineteca-library-v1";
 
-// Schemas for localStorage validation
+// Schemas for localStorage validation.
+//
+// OJO con status y rating: Zod descarta por defecto cualquier clave que no
+// este declarada en el schema. Con `z.object({ kind: z.string() })`, cada
+// lectura de localStorage devolvia SOLO { kind } y perdia voteCount,
+// average y releaseDate -- silenciosamente, sin ningun error, hasta que la
+// UI intentaba formatear un numero que ya no estaba y mostraba "NaN /10".
+// Por eso van como uniones discriminadas que reflejan exactamente las
+// variantes del dominio (MovieStatus y Rating).
+const StoredMovieStatusSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("released"), releaseDate: z.string() }),
+  z.object({ kind: z.literal("unreleased"), releaseDate: z.string() }),
+  z.object({ kind: z.literal("unknown") }),
+]);
+
+const StoredRatingSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("no-votes") }),
+  z.object({
+    kind: z.literal("few-votes"),
+    voteCount: z.number(),
+    average: z.number(),
+  }),
+  z.object({
+    kind: z.literal("established"),
+    voteCount: z.number(),
+    average: z.number(),
+  }),
+]);
+
 const StoredMovieSchema = z.object({
   id: z.number(),
   title: z.string(),
@@ -20,8 +48,26 @@ const StoredMovieSchema = z.object({
   budget: z
     .object({ amountMinor: z.number(), currency: z.literal("USD") })
     .nullable(),
-  status: z.object({ kind: z.string() }),
-  rating: z.object({ kind: z.string() }),
+  status: StoredMovieStatusSchema,
+  rating: StoredRatingSchema,
+  // Mismo motivo que status/rating arriba: si no se declaran aqui, Zod
+  // los descarta en cada lectura aunque el escritor los haya guardado bien.
+  // Hoy ninguna pantalla los muestra para una pelicula ya guardada, pero
+  // omitirlos del schema es dejar la misma trampa para la proxima feature
+  // que si los use.
+  overviewLanguage: z.enum(["es", "en"]).optional(),
+  director: z.string().nullable().optional(),
+  cast: z
+    .array(
+      z.object({
+        id: z.number(),
+        name: z.string(),
+        character: z.string().nullable(),
+        profilePath: z.string().nullable(),
+      }),
+    )
+    .optional(),
+  trailerKey: z.string().nullable().optional(),
 });
 
 const StoredMovieListSchema = z.object({
@@ -69,16 +115,38 @@ export class LocalLibraryRepository implements LibraryRepository {
   }
 
   #convertStoredMovieToMovie(stored: z.infer<typeof StoredMovieSchema>): Movie {
+    // status.releaseDate viaja como string en el almacenamiento (igual que
+    // el releaseDate de nivel superior) porque JSON no tiene tipo Date.
+    // Sin esta conversion, un componente que llame status.releaseDate
+    // esperando un Date recibiria un string en runtime.
+    const status =
+      stored.status.kind === "released" || stored.status.kind === "unreleased"
+        ? {
+            kind: stored.status.kind,
+            releaseDate: new Date(stored.status.releaseDate),
+          }
+        : stored.status;
+
     return {
       ...stored,
       releaseDate: stored.releaseDate ? new Date(stored.releaseDate) : null,
-    } as Movie;
+      status,
+    };
   }
 
   #convertMovieToStoredMovie(movie: Movie): z.infer<typeof StoredMovieSchema> {
+    const status =
+      movie.status.kind === "released" || movie.status.kind === "unreleased"
+        ? {
+            kind: movie.status.kind,
+            releaseDate: movie.status.releaseDate.toISOString(),
+          }
+        : movie.status;
+
     return {
       ...movie,
       releaseDate: movie.releaseDate ? movie.releaseDate.toISOString() : null,
+      status,
     };
   }
 
@@ -183,7 +251,7 @@ export class LocalLibraryRepository implements LibraryRepository {
     return this.#convertStoredListToMovieList(stored);
   }
 
-  async addToList(listId: string, movieId: number): Promise<void> {
+  async addToList(listId: string, movie: Movie): Promise<void> {
     const library = this.#loadLibrary();
     const listIndex = library.lists.findIndex((l) => l.id === listId);
 
@@ -191,13 +259,25 @@ export class LocalLibraryRepository implements LibraryRepository {
       throw new Error("List not found");
     }
 
+    // Garantizamos que la pelicula quede guardada en library.movies. Sin
+    // esto, la lista guarda una referencia a un id que getById() nunca
+    // encuentra, y la lista se ve vacia aunque movieIds no lo este.
+    const movieIndex = library.movies.findIndex((m) => m.id === movie.id);
+    const storedMovie = this.#convertMovieToStoredMovie(movie);
+    if (movieIndex >= 0) {
+      library.movies[movieIndex] = storedMovie;
+    } else {
+      library.movies.push(storedMovie);
+    }
+
     const list = library.lists[listIndex]!;
-    if (!list.movieIds.includes(movieId)) {
-      list.movieIds.push(movieId);
+    if (!list.movieIds.includes(movie.id)) {
+      list.movieIds.push(movie.id);
       list.updatedAt = new Date().toISOString();
       library.lists[listIndex] = list;
-      this.#saveLibrary(library);
     }
+
+    this.#saveLibrary(library);
   }
 
   async removeFromList(listId: string, movieId: number): Promise<void> {
