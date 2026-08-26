@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+# Reportes de cobertura generados por vitest
+coverage
+
+# Cache incremental de tsc -b
+*.tsbuildinfo

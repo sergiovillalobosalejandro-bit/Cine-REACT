@@ -12,7 +12,7 @@ describe("TmdbClient", () => {
     const mockData = { test: "data" };
 
     server.use(
-      http.get("https://api.themoviedb.org/test", () => {
+      http.get("https://api.themoviedb.org/3/test", () => {
         return HttpResponse.json(mockData);
       }),
     );
@@ -25,7 +25,7 @@ describe("TmdbClient", () => {
 
   it("should throw TmdbError with NOT_FOUND for TMDB code 34", async () => {
     server.use(
-      http.get("https://api.themoviedb.org/test", () => {
+      http.get("https://api.themoviedb.org/3/test", () => {
         return HttpResponse.json(
           {
             status_code: 34,
@@ -53,7 +53,7 @@ describe("TmdbClient", () => {
 
   it("should throw TmdbError with INVALID_PAGE for TMDB code 22", async () => {
     server.use(
-      http.get("https://api.themoviedb.org/test", () => {
+      http.get("https://api.themoviedb.org/3/test", () => {
         return HttpResponse.json(
           {
             status_code: 22,
@@ -81,7 +81,7 @@ describe("TmdbClient", () => {
 
   it("should throw TmdbError with RATE_LIMIT for HTTP 429", async () => {
     server.use(
-      http.get("https://api.themoviedb.org/test", () => {
+      http.get("https://api.themoviedb.org/3/test", () => {
         return HttpResponse.json(
           { status_code: 429, status_message: "Rate limit exceeded" },
           { status: 429, headers: { "Retry-After": "5" } },
@@ -109,7 +109,7 @@ describe("TmdbClient", () => {
 
   it("should throw TmdbError with RATE_LIMIT for HTTP 429 without retry-after", async () => {
     server.use(
-      http.get("https://api.themoviedb.org/test", () => {
+      http.get("https://api.themoviedb.org/3/test", () => {
         return HttpResponse.json(
           { status_code: 429, status_message: "Rate limit exceeded" },
           { status: 429 },
@@ -132,7 +132,7 @@ describe("TmdbClient", () => {
 
   it("should throw TmdbError with NOT_FOUND for HTTP 404", async () => {
     server.use(
-      http.get("https://api.themoviedb.org/test", () => {
+      http.get("https://api.themoviedb.org/3/test", () => {
         return HttpResponse.json(
           { status_code: 404, status_message: "Not found" },
           { status: 404 },
@@ -157,7 +157,7 @@ describe("TmdbClient", () => {
 
   it("should throw TmdbError with NETWORK_ERROR for network errors", async () => {
     server.use(
-      http.get("https://api.themoviedb.org/test", () => {
+      http.get("https://api.themoviedb.org/3/test", () => {
         return HttpResponse.error();
       }),
     );
@@ -179,7 +179,7 @@ describe("TmdbClient", () => {
 
   it("should pass query parameters", async () => {
     server.use(
-      http.get("https://api.themoviedb.org/test", ({ request }) => {
+      http.get("https://api.themoviedb.org/3/test", ({ request }) => {
         const url = new URL(request.url);
         expect(url.searchParams.get("page")).toBe("1");
         expect(url.searchParams.get("query")).toBe("test");
@@ -193,7 +193,7 @@ describe("TmdbClient", () => {
 
   it("should include Bearer token in authorization header", async () => {
     server.use(
-      http.get("https://api.themoviedb.org/test", ({ request }) => {
+      http.get("https://api.themoviedb.org/3/test", ({ request }) => {
         const auth = request.headers.get("Authorization");
         expect(auth).toMatch(/^Bearer /);
         return HttpResponse.json({ success: true });

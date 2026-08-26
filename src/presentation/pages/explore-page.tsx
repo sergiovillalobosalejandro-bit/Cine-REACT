@@ -1,15 +1,9 @@
 import { useSearchParams } from "react-router";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-  useQuery,
-} from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Compass, Loader2, AlertCircle } from "lucide-react";
 import { movieRepository, libraryRepository } from "../lib/services.js";
 import { discoverMovies } from "../../application/use-cases/discover-movies.js";
 import { useToggleLibraryMovie } from "../hooks/use-toggle-library-movie.js";
-import type { Movie } from "../../domain/movie.js";
 import {
   parseExploreParams,
   normalizeExploreParams,
@@ -28,7 +22,6 @@ const MAX_PAGES = 500;
 
 export function ExplorePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const queryClient = useQueryClient();
 
   // Validate URLSearchParams with Zod
   const validatedParams = parseExploreParams(searchParams);

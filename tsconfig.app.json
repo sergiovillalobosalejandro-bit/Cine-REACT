@@ -15,7 +15,6 @@
     "noUnusedParameters": true,
     "verbatimModuleSyntax": true,
     "erasableSyntaxOnly": true,
-    "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   }
 }

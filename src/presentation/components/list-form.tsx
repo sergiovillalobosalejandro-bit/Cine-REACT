@@ -28,7 +28,7 @@ const createListSchema = (existingNames: string[]) =>
 type ListFormData = z.infer<ReturnType<typeof createListSchema>>;
 
 interface ListFormProps {
-  initialData?: Partial<MovieList>;
+  initialData?: Partial<MovieList> | undefined;
   existingListNames: string[];
   onSubmit: (data: ListFormData) => Promise<void>;
   onClose: () => void;

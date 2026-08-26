@@ -21,7 +21,7 @@ export type Movie = {
   title: string;
   originalTitle: string | null;
   overview: string | null;
-  overviewLanguage?: "es" | "en";
+  overviewLanguage?: "es" | "en" | undefined;
   posterPath: string | null;
   releaseDate: Date | null;
   runtime: number | null;
@@ -29,9 +29,9 @@ export type Movie = {
   budget: Money | null;
   status: MovieStatus;
   rating: Rating;
-  director?: string | null;
-  cast?: CastMember[];
-  trailerKey?: string | null;
+  director?: string | null | undefined;
+  cast?: CastMember[] | undefined;
+  trailerKey?: string | null | undefined;
 };
 
 export function createMovie(data: {
@@ -39,7 +39,7 @@ export function createMovie(data: {
   title: string;
   original_title: string | null | undefined;
   overview: string | null | undefined;
-  overviewLanguage?: "es" | "en";
+  overviewLanguage?: "es" | "en" | undefined;
   poster_path: string | null | undefined;
   release_date: string | null | undefined;
   runtime: number | null | undefined;
@@ -47,9 +47,9 @@ export function createMovie(data: {
   budget: number | null | undefined;
   vote_count: number | null | undefined;
   vote_average: number | null | undefined;
-  director?: string | null;
-  cast?: CastMember[];
-  trailerKey?: string | null;
+  director?: string | null | undefined;
+  cast?: CastMember[] | undefined;
+  trailerKey?: string | null | undefined;
 }): Movie {
   const {
     id,

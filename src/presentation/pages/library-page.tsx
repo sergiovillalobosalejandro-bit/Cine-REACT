@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Bookmark,
   ListPlus,
@@ -45,7 +45,7 @@ export function LibraryPage() {
 
   // Create List Mutation
   const createListMutation = useMutation({
-    mutationFn: (data: { name: string; description?: string }) =>
+    mutationFn: (data: { name: string; description?: string | undefined }) =>
       createList(libraryRepository, data.name, data.description),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["library-lists"] });
@@ -195,7 +195,9 @@ export function LibraryPage() {
       {isCreateModalOpen && (
         <ListForm
           existingListNames={existingListNames}
-          onSubmit={createListMutation.mutateAsync}
+          onSubmit={async (data) => {
+            await createListMutation.mutateAsync(data);
+          }}
           onClose={() => setIsCreateModalOpen(false)}
           title={TEXTS.library.createListModalTitle}
           isPending={createListMutation.isPending}

@@ -4,14 +4,14 @@ import { MovieCardSkeleton } from "./movie-card-skeleton.js";
 import { EmptyState } from "./empty-state.js";
 
 interface MovieGridProps {
-  movies?: Movie[];
-  isLoading?: boolean;
-  savedMovieIds?: Set<number>;
-  onToggleSave?: (movie: Movie) => void;
-  onRemoveMovie?: (movieId: number) => void;
-  emptyTitle?: string;
-  emptyDesc?: string;
-  skeletonCount?: number;
+  movies?: Movie[] | undefined;
+  isLoading?: boolean | undefined;
+  savedMovieIds?: Set<number> | undefined;
+  onToggleSave?: ((movie: Movie) => void) | undefined;
+  onRemoveMovie?: ((movieId: number) => void) | undefined;
+  emptyTitle?: string | undefined;
+  emptyDesc?: string | undefined;
+  skeletonCount?: number | undefined;
 }
 
 export function MovieGrid({

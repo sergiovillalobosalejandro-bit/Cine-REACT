@@ -1,5 +1,4 @@
 import { z } from "zod";
-import type { DiscoverParams } from "../../application/ports/movie-repository.js";
 
 const CURRENT_YEAR = new Date().getFullYear();
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { AxiosRequestConfig } from "axios";
 import { env } from "../../config/env.js";
 
 export class TmdbError extends Error {
@@ -18,7 +19,10 @@ export class TmdbClient {
   #token: string;
 
   constructor() {
-    this.#baseURL = env.VITE_TMDB_API_BASE;
+    // La API de TMDB vive bajo /3. VITE_TMDB_API_BASE solo trae el host
+    // (https://api.themoviedb.org), asi que la version se agrega aqui:
+    // sin ella, la API responde 404 a todas las peticiones.
+    this.#baseURL = `${env.VITE_TMDB_API_BASE}/3`;
     this.#token = env.VITE_TMDB_READ_TOKEN;
   }
 
@@ -28,14 +32,22 @@ export class TmdbClient {
     options?: { signal?: AbortSignal },
   ): Promise<T> {
     try {
-      const response = await axios.get<T>(`${this.#baseURL}${endpoint}`, {
+      // Con exactOptionalPropertyTypes no se puede pasar "signal: undefined":
+      // o la clave existe con un valor, o no existe. Por eso las agregamos
+      // solo cuando de verdad hay algo que pasar.
+      const config: AxiosRequestConfig = {
         headers: {
           Authorization: `Bearer ${this.#token}`,
           "Content-Type": "application/json",
         },
-        params,
-        signal: options?.signal,
-      });
+      };
+      if (params) config.params = params;
+      if (options?.signal) config.signal = options.signal;
+
+      const response = await axios.get<T>(
+        `${this.#baseURL}${endpoint}`,
+        config,
+      );
 
       return response.data;
     } catch (error) {

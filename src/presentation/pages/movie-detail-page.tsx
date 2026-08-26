@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useParams } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
 import {
   Bookmark,
   BookmarkCheck,
@@ -18,10 +18,8 @@ import {
   Video,
 } from "lucide-react";
 import { movieRepository, libraryRepository } from "../lib/services.js";
-import { getMovieDetails } from "../../application/use-cases/get-movie-details.js";
 import { useToggleLibraryMovie } from "../hooks/use-toggle-library-movie.js";
 import { useAddMovieToList } from "../hooks/use-list-mutations.js";
-import type { Movie } from "../../domain/movie.js";
 import { Poster } from "../components/poster.js";
 import { RatingBadge } from "../components/rating.js";
 import { MovieGrid } from "../components/movie-grid.js";
@@ -36,7 +34,6 @@ export function MovieDetailPage() {
 
   const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [selectedListId, setSelectedListId] = useState("");
-  const queryClient = useQueryClient();
 
   // Movie Details query (includes credits, videos, and English overview fallback)
   const {

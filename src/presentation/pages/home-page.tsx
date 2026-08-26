@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Compass, Flame, TrendingUp } from "lucide-react";
 import { movieRepository, libraryRepository } from "../lib/services.js";
 import { getTrendingMovies } from "../../application/use-cases/get-trending-movies.js";
 import { useToggleLibraryMovie } from "../hooks/use-toggle-library-movie.js";
-import type { Movie } from "../../domain/movie.js";
 import { MovieGrid } from "../components/movie-grid.js";
 import { ErrorState } from "../components/error-state.js";
 import { TEXTS } from "../texts/es.js";
 
 export function HomePage() {
   const [timeWindow, setTimeWindow] = useState<"day" | "week">("week");
-  const queryClient = useQueryClient();
 
   // Fetch trending movies
   const {

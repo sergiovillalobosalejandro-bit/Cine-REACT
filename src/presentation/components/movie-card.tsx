@@ -7,9 +7,9 @@ import { TEXTS } from "../texts/es.js";
 
 interface MovieCardProps {
   movie: Movie;
-  isSaved?: boolean;
-  onToggleSave?: (movie: Movie) => void;
-  onRemove?: (movieId: number) => void;
+  isSaved?: boolean | undefined;
+  onToggleSave?: ((movie: Movie) => void) | undefined;
+  onRemove?: ((movieId: number) => void) | undefined;
 }
 
 export function MovieCard({

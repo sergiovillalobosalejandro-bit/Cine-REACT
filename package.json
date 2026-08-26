@@ -13,7 +13,7 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check-types": "tsc --noEmit",
+    "check-types": "tsc -b --noEmit",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "prepare": "husky"

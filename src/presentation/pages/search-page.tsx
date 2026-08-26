@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Search, ChevronLeft, ChevronRight, Info } from "lucide-react";
 import { movieRepository, libraryRepository } from "../lib/services.js";
 import { useToggleLibraryMovie } from "../hooks/use-toggle-library-movie.js";
-import type { Movie } from "../../domain/movie.js";
 import { useDebounce } from "../hooks/use-debounce.js";
 import { MovieGrid } from "../components/movie-grid.js";
 import { ErrorState } from "../components/error-state.js";
@@ -14,15 +13,10 @@ export function SearchPage() {
   const [searchParams] = useSearchParams();
   const rawQuery = searchParams.get("q") ?? "";
   const [page, setPage] = useState(1);
-  const queryClient = useQueryClient();
 
   // Apply 400ms debounce to the search query from URL
   const debouncedQuery = useDebounce(rawQuery, 400);
   const isQueryValid = debouncedQuery.trim().length >= 2;
-
-  // Reset page to 1 whenever raw search text changes
-  // Use a key on the query to naturally reset when query changes
-  const queryKey = ["search", debouncedQuery.trim(), page];
 
   // Search query execution with automatic request cancellation via signal
   const {

@@ -41,7 +41,7 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/trending/movie/day", () => {
+        http.get("https://api.themoviedb.org/3/trending/movie/day", () => {
           return HttpResponse.json(mockResponse);
         }),
       );
@@ -76,7 +76,7 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/trending/movie/week", () => {
+        http.get("https://api.themoviedb.org/3/trending/movie/week", () => {
           return HttpResponse.json(mockResponse);
         }),
       );
@@ -88,7 +88,7 @@ describe("TmdbMovieRepository", () => {
 
     it("should throw error for corrupt response", async () => {
       server.use(
-        http.get("https://api.themoviedb.org/trending/movie/day", () => {
+        http.get("https://api.themoviedb.org/3/trending/movie/day", () => {
           return HttpResponse.json({ invalid: "data" });
         }),
       );
@@ -123,13 +123,16 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/discover/movie", ({ request }) => {
-          const url = new URL(request.url);
-          expect(url.searchParams.get("with_genres")).toBe("28");
-          expect(url.searchParams.get("primary_release_year")).toBe("2020");
-          expect(url.searchParams.get("sort_by")).toBe("popularity.desc");
-          return HttpResponse.json(mockResponse);
-        }),
+        http.get(
+          "https://api.themoviedb.org/3/discover/movie",
+          ({ request }) => {
+            const url = new URL(request.url);
+            expect(url.searchParams.get("with_genres")).toBe("28");
+            expect(url.searchParams.get("primary_release_year")).toBe("2020");
+            expect(url.searchParams.get("sort_by")).toBe("popularity.desc");
+            return HttpResponse.json(mockResponse);
+          },
+        ),
       );
 
       const result = await repository.discover({
@@ -143,7 +146,7 @@ describe("TmdbMovieRepository", () => {
 
     it("should throw error for corrupt response", async () => {
       server.use(
-        http.get("https://api.themoviedb.org/discover/movie", () => {
+        http.get("https://api.themoviedb.org/3/discover/movie", () => {
           return HttpResponse.json({ invalid: "data" });
         }),
       );
@@ -178,7 +181,7 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/search/movie", ({ request }) => {
+        http.get("https://api.themoviedb.org/3/search/movie", ({ request }) => {
           const url = new URL(request.url);
           expect(url.searchParams.get("query")).toBe("test");
           expect(url.searchParams.get("page")).toBe("1");
@@ -202,7 +205,7 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/search/movie", () => {
+        http.get("https://api.themoviedb.org/3/search/movie", () => {
           return HttpResponse.json(mockResponse);
         }),
       );
@@ -215,7 +218,7 @@ describe("TmdbMovieRepository", () => {
 
     it("should throw error for corrupt response", async () => {
       server.use(
-        http.get("https://api.themoviedb.org/search/movie", () => {
+        http.get("https://api.themoviedb.org/3/search/movie", () => {
           return HttpResponse.json({ invalid: "data" });
         }),
       );
@@ -243,7 +246,7 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/movie/1", ({ request }) => {
+        http.get("https://api.themoviedb.org/3/movie/1", ({ request }) => {
           const url = new URL(request.url);
           expect(url.searchParams.get("append_to_response")).toBe(
             "credits,videos",
@@ -288,7 +291,7 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/movie/1", ({ request }) => {
+        http.get("https://api.themoviedb.org/3/movie/1", ({ request }) => {
           const url = new URL(request.url);
           if (url.searchParams.get("language") === "es-ES") {
             return HttpResponse.json(mockEsResponse);
@@ -344,7 +347,7 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/movie/1", () => {
+        http.get("https://api.themoviedb.org/3/movie/1", () => {
           return HttpResponse.json(mockResponse);
         }),
       );
@@ -359,7 +362,7 @@ describe("TmdbMovieRepository", () => {
 
     it("should throw error for corrupt response", async () => {
       server.use(
-        http.get("https://api.themoviedb.org/movie/1", () => {
+        http.get("https://api.themoviedb.org/3/movie/1", () => {
           return HttpResponse.json({ invalid: "data" });
         }),
       );
@@ -394,7 +397,7 @@ describe("TmdbMovieRepository", () => {
       };
 
       server.use(
-        http.get("https://api.themoviedb.org/movie/1/recommendations", () => {
+        http.get("https://api.themoviedb.org/3/movie/1/recommendations", () => {
           return HttpResponse.json(mockResponse);
         }),
       );
@@ -407,7 +410,7 @@ describe("TmdbMovieRepository", () => {
 
     it("should throw error for corrupt response", async () => {
       server.use(
-        http.get("https://api.themoviedb.org/movie/1/recommendations", () => {
+        http.get("https://api.themoviedb.org/3/movie/1/recommendations", () => {
           return HttpResponse.json({ invalid: "data" });
         }),
       );
@@ -421,7 +424,7 @@ describe("TmdbMovieRepository", () => {
   describe("error handling", () => {
     it("should propagate 404 errors", async () => {
       server.use(
-        http.get("https://api.themoviedb.org/movie/1", () => {
+        http.get("https://api.themoviedb.org/3/movie/1", () => {
           return HttpResponse.json(
             { status_code: 34, status_message: "Not found" },
             { status: 404 },
@@ -436,7 +439,7 @@ describe("TmdbMovieRepository", () => {
 
     it("should propagate 429 errors", async () => {
       server.use(
-        http.get("https://api.themoviedb.org/movie/1", () => {
+        http.get("https://api.themoviedb.org/3/movie/1", () => {
           return HttpResponse.json(
             { status_code: 429, status_message: "Rate limit" },
             { status: 429, headers: { "Retry-After": "5" } },
@@ -451,7 +454,7 @@ describe("TmdbMovieRepository", () => {
 
     it("should propagate network errors", async () => {
       server.use(
-        http.get("https://api.themoviedb.org/movie/1", () => {
+        http.get("https://api.themoviedb.org/3/movie/1", () => {
           return HttpResponse.error();
         }),
       );

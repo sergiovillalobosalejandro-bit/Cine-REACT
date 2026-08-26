@@ -8,6 +8,8 @@ import {
   removeMovieFromList,
 } from "../../application/use-cases/manage-lists.js";
 import type { Movie } from "../../domain/movie.js";
+import { createMovieStatus } from "../../domain/movie-status.js";
+import { createRating } from "../../domain/rating.js";
 import type { MovieList } from "../../application/ports/library-repository.js";
 
 export function useCreateList() {
@@ -19,7 +21,7 @@ export function useCreateList() {
       description,
     }: {
       name: string;
-      description?: string;
+      description?: string | undefined;
     }) => createList(libraryRepository, name, description),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["library-lists"] });
@@ -38,7 +40,7 @@ export function useUpdateList() {
     }: {
       listId: string;
       name: string;
-      description?: string;
+      description?: string | undefined;
     }) => updateList(libraryRepository, listId, name, description),
     onSettled: (_data, _error, { listId }) => {
       queryClient.invalidateQueries({ queryKey: ["library-lists"] });
@@ -103,26 +105,30 @@ export function useAddMovieToList() {
         if (old.some((m) => m.id === movieId)) return old;
         return [
           ...old,
+          // Placeholder optimista: la pelicula real llega cuando la query
+          // se revalida. Usamos las fabricas del dominio en vez de escribir
+          // los estados a mano: Rating no tiene variante "unknown", y el
+          // casteo "as Movie" que habia antes ocultaba justamente eso.
           {
             id: movieId,
             title: "",
-            originalTitle: "",
+            originalTitle: null,
             overview: null,
             posterPath: null,
             releaseDate: null,
             runtime: null,
             genres: [],
             budget: null,
-            status: { kind: "unknown" },
-            rating: { kind: "unknown" },
-          } as Movie,
+            status: createMovieStatus(null),
+            rating: createRating(null, null),
+          },
         ];
       });
 
       return { previousLists, previousListMovies };
     },
 
-    onError: (_err, { listId, movieId }, context) => {
+    onError: (_err, { listId }, context) => {
       if (context?.previousLists) {
         queryClient.setQueryData(["library-lists"], context.previousLists);
       }
@@ -189,7 +195,7 @@ export function useRemoveMovieFromList() {
       return { previousLists, previousListMovies };
     },
 
-    onError: (_err, { listId, movieId }, context) => {
+    onError: (_err, { listId }, context) => {
       if (context?.previousLists) {
         queryClient.setQueryData(["library-lists"], context.previousLists);
       }

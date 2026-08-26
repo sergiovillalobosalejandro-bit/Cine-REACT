@@ -2,7 +2,7 @@ import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
 
 export const handlers = [
-  http.get("https://api.themoviedb.org/trending/movie/:timeWindow", () => {
+  http.get("https://api.themoviedb.org/3/trending/movie/:timeWindow", () => {
     return HttpResponse.json({
       page: 1,
       results: [

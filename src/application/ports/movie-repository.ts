@@ -9,12 +9,13 @@ export interface MovieRepository {
 }
 
 export interface DiscoverParams {
-  genre?: number;
-  year?: number;
-  voteAverageMin?: number;
-  voteCountMin?: number;
-  sortBy?: "popularity" | "vote_average" | "vote_count" | "release_date";
-  page?: number;
+  genre?: number | undefined;
+  year?: number | undefined;
+  voteAverageMin?: number | undefined;
+  voteCountMin?: number | undefined;
+  sortBy?:
+    "popularity" | "vote_average" | "vote_count" | "release_date" | undefined;
+  page?: number | undefined;
 }
 
 export interface SearchResult {

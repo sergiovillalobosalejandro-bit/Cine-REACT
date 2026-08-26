@@ -2,10 +2,10 @@ import { Film } from "lucide-react";
 import { TEXTS } from "../texts/es.js";
 
 interface EmptyStateProps {
-  title?: string;
-  description?: string;
-  actionLabel?: string;
-  onAction?: () => void;
+  title?: string | undefined;
+  description?: string | undefined;
+  actionLabel?: string | undefined;
+  onAction?: (() => void) | undefined;
 }
 
 export function EmptyState({

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams, useNavigate } from "react-router";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ListFilter, Edit3, Trash2, Calendar, Clock } from "lucide-react";
 import { libraryRepository } from "../lib/services.js";
 import {
@@ -9,9 +9,7 @@ import {
   removeMovieFromList,
 } from "../../application/use-cases/manage-lists.js";
 import type { Movie } from "../../domain/movie.js";
-import type { MovieList } from "../../application/ports/library-repository.js";
 import { MovieGrid } from "../components/movie-grid.js";
-import { EmptyState } from "../components/empty-state.js";
 import { ErrorState } from "../components/error-state.js";
 import { ListForm } from "../components/list-form.js";
 import { TEXTS } from "../texts/es.js";
@@ -64,7 +62,7 @@ export function ListDetailPage() {
 
   // Update List Mutation
   const updateMutation = useMutation({
-    mutationFn: (data: { name: string; description?: string }) =>
+    mutationFn: (data: { name: string; description?: string | undefined }) =>
       updateList(libraryRepository, listId!, data.name, data.description),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["library-list", listId] });
@@ -147,7 +145,7 @@ export function ListDetailPage() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={openEditModal}
+              onClick={() => setIsEditModalOpen(true)}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-all"
             >
               <Edit3 className="w-3.5 h-3.5 text-indigo-400" />
@@ -194,7 +192,9 @@ export function ListDetailPage() {
         <ListForm
           initialData={list}
           existingListNames={existingListNames}
-          onSubmit={updateMutation.mutateAsync}
+          onSubmit={async (data) => {
+            await updateMutation.mutateAsync(data);
+          }}
           onClose={() => setIsEditModalOpen(false)}
           title={TEXTS.listDetail.editModalTitle}
           isPending={updateMutation.isPending}
