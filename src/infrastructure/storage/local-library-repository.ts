@@ -198,6 +198,21 @@ export class LocalLibraryRepository implements LibraryRepository {
   async remove(movieId: number): Promise<void> {
     const library = this.#loadLibrary();
     library.movies = library.movies.filter((m) => m.id !== movieId);
+
+    // addToList() garantiza que toda pelicula referenciada por una lista
+    // este guardada en library.movies. Si remove() no hiciera lo mismo en
+    // sentido inverso, quedaria un id "fantasma" en movieIds: la lista
+    // seguiria contando la pelicula pero getById() nunca la encontraria,
+    // y list-detail-page la mostraria vacia aunque el contador diga 1.
+    library.lists = library.lists.map((list) => {
+      if (!list.movieIds.includes(movieId)) return list;
+      return {
+        ...list,
+        movieIds: list.movieIds.filter((id) => id !== movieId),
+        updatedAt: new Date().toISOString(),
+      };
+    });
+
     this.#saveLibrary(library);
   }
 

@@ -10,8 +10,7 @@ import {
 } from "lucide-react";
 import { libraryRepository } from "../lib/services.js";
 import { createList } from "../../application/use-cases/manage-lists.js";
-import { toggleLibraryMovie } from "../../application/use-cases/toggle-library-movie.js";
-import type { Movie } from "../../domain/movie.js";
+import { useToggleLibraryMovie } from "../hooks/use-toggle-library-movie.js";
 import { MovieGrid } from "../components/movie-grid.js";
 import { EmptyState } from "../components/empty-state.js";
 import { ListForm } from "../components/list-form.js";
@@ -35,13 +34,13 @@ export function LibraryPage() {
     queryFn: () => libraryRepository.getLists(),
   });
 
-  // Toggle Save Mutation
-  const toggleSaveMutation = useMutation({
-    mutationFn: (movie: Movie) => toggleLibraryMovie(libraryRepository, movie),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["library-saved-movies"] });
-    },
-  });
+  // Se usa el mismo hook compartido que el resto de las paginas: tiene
+  // actualizacion optimista e invalida library-lists y list-movies. La
+  // mutacion local que estaba aqui antes solo invalidaba
+  // library-saved-movies, asi que si esta pantalla quitaba una pelicula
+  // que tambien estaba en una lista, "Mis Listas" quedaba con datos
+  // obsoletos hasta 5 minutos (el staleTime de la cache).
+  const toggleSaveMutation = useToggleLibraryMovie();
 
   // Create List Mutation
   const createListMutation = useMutation({

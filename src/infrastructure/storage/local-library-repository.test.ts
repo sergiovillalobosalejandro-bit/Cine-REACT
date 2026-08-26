@@ -121,6 +121,28 @@ describe("LocalLibraryRepository", () => {
       const repository = createFreshRepository();
       await expect(repository.remove(999)).resolves.not.toThrow();
     });
+
+    it("should remove the movie's id from every list that references it", async () => {
+      const repository = createFreshRepository();
+      const list = await repository.createList("Favorites");
+      await repository.addToList(list.id, mockMovie);
+
+      await repository.remove(mockMovie.id);
+
+      const updatedList = (await repository.getLists())[0]!;
+      expect(updatedList.movieIds).not.toContain(mockMovie.id);
+    });
+
+    it("should not touch lists that don't reference the removed movie", async () => {
+      const repository = createFreshRepository();
+      const list = await repository.createList("Favorites");
+      await repository.addToList(list.id, mockMovie2);
+
+      await repository.remove(mockMovie.id);
+
+      const updatedList = (await repository.getLists())[0]!;
+      expect(updatedList.movieIds).toContain(mockMovie2.id);
+    });
   });
 
   describe("exists", () => {
