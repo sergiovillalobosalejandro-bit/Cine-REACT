@@ -43,10 +43,10 @@ export function HomePage() {
   return (
     <div className="flex flex-col gap-10">
       {/* Hero Banner */}
-      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-indigo-950 via-slate-900 to-slate-950 p-8 sm:p-12 border border-slate-800/80 shadow-2xl">
-        <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-emerald-950 via-slate-900 to-slate-950 p-8 sm:p-12 border border-slate-800/80 shadow-2xl">
+        <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="relative max-w-2xl flex flex-col gap-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold w-fit">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold w-fit">
             <Flame className="w-3.5 h-3.5" />
             <span>{TEXTS.app.tagline}</span>
           </div>
@@ -62,7 +62,7 @@ export function HomePage() {
           <div className="pt-2 flex flex-wrap gap-4">
             <Link
               to="/explore"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/50"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-emerald-600/30 hover:shadow-emerald-500/50"
             >
               <Compass className="w-4 h-4" />
               <span>{TEXTS.home.exploreCta}</span>
@@ -90,7 +90,7 @@ export function HomePage() {
               onClick={() => setTimeWindow("day")}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 timeWindow === "day"
-                  ? "bg-indigo-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-sm"
                   : "text-slate-400 hover:text-slate-200"
               }`}
             >
@@ -102,7 +102,7 @@ export function HomePage() {
               onClick={() => setTimeWindow("week")}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 timeWindow === "week"
-                  ? "bg-indigo-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-sm"
                   : "text-slate-400 hover:text-slate-200"
               }`}
             >

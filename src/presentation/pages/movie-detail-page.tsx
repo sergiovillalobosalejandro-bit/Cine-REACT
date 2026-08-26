@@ -133,7 +133,7 @@ export function MovieDetailPage() {
                 showCount
                 className="text-sm"
               />
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-medium">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
                 {statusFormatted}
               </span>
             </div>
@@ -156,7 +156,7 @@ export function MovieDetailPage() {
               className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-md ${
                 isSaved
                   ? "bg-rose-600/90 text-white hover:bg-rose-600 shadow-rose-600/30"
-                  : "bg-indigo-600 text-white hover:bg-indigo-500 shadow-indigo-600/30"
+                  : "bg-emerald-600 text-white hover:bg-emerald-500 shadow-emerald-600/30"
               }`}
             >
               {isSaved ? (
@@ -176,7 +176,7 @@ export function MovieDetailPage() {
               onClick={() => setIsListModalOpen(true)}
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm rounded-xl border border-slate-700 transition-all"
             >
-              <Plus className="w-4 h-4 text-indigo-400" />
+              <Plus className="w-4 h-4 text-emerald-400" />
               <span>{TEXTS.movieDetail.addToList}</span>
             </button>
           </div>
@@ -185,7 +185,7 @@ export function MovieDetailPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-950/60 rounded-2xl border border-slate-800/80 text-xs">
             <div className="flex flex-col gap-1">
               <span className="text-slate-500 font-medium flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-indigo-400" />
+                <Calendar className="w-3.5 h-3.5 text-emerald-400" />
                 {TEXTS.movieDetail.releaseDate}
               </span>
               <span className="text-slate-200 font-semibold">
@@ -195,7 +195,7 @@ export function MovieDetailPage() {
 
             <div className="flex flex-col gap-1">
               <span className="text-slate-500 font-medium flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-indigo-400" />
+                <Clock className="w-3.5 h-3.5 text-emerald-400" />
                 {TEXTS.movieDetail.runtime}
               </span>
               <span className="text-slate-200 font-semibold">
@@ -205,7 +205,7 @@ export function MovieDetailPage() {
 
             <div className="flex flex-col gap-1">
               <span className="text-slate-500 font-medium flex items-center gap-1.5">
-                <DollarSign className="w-3.5 h-3.5 text-indigo-400" />
+                <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
                 {TEXTS.movieDetail.budget}
               </span>
               <span className="text-slate-200 font-semibold">
@@ -215,7 +215,7 @@ export function MovieDetailPage() {
 
             <div className="flex flex-col gap-1">
               <span className="text-slate-500 font-medium flex items-center gap-1.5">
-                <Tag className="w-3.5 h-3.5 text-indigo-400" />
+                <Tag className="w-3.5 h-3.5 text-emerald-400" />
                 {TEXTS.movieDetail.genres}
               </span>
               <span className="text-slate-200 font-semibold line-clamp-1">
@@ -230,7 +230,7 @@ export function MovieDetailPage() {
             <div className="flex flex-col gap-3 pt-2">
               {movie.director && (
                 <div className="flex items-center gap-2 text-xs">
-                  <Clapperboard className="w-4 h-4 text-indigo-400" />
+                  <Clapperboard className="w-4 h-4 text-emerald-400" />
                   <span className="text-slate-400 font-medium">
                     {TEXTS.movieDetail.director}:
                   </span>
@@ -243,7 +243,7 @@ export function MovieDetailPage() {
               {movie.cast && movie.cast.length > 0 && (
                 <div className="flex flex-col gap-2">
                   <span className="text-xs text-slate-400 font-medium flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5 text-indigo-400" />
+                    <Users className="w-3.5 h-3.5 text-emerald-400" />
                     {TEXTS.movieDetail.cast}
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -285,7 +285,7 @@ export function MovieDetailPage() {
           {movie.trailerKey && (
             <div className="flex flex-col gap-3 pt-4 border-t border-slate-800/80">
               <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                <Video className="w-4 h-4 text-indigo-400" />
+                <Video className="w-4 h-4 text-emerald-400" />
                 <span>{TEXTS.movieDetail.trailer}</span>
               </h3>
               <div className="aspect-video w-full max-w-2xl rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
@@ -306,7 +306,7 @@ export function MovieDetailPage() {
       {recommendations && recommendations.length > 0 && (
         <section className="flex flex-col gap-6">
           <div className="flex items-center gap-3 border-b border-slate-800/80 pb-4">
-            <div className="p-2 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">
+            <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
               <Sparkles className="w-5 h-5" />
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-slate-100">
@@ -355,7 +355,7 @@ export function MovieDetailPage() {
                       onClick={() => setSelectedListId(list.id)}
                       className={`flex items-center justify-between p-3 rounded-xl text-left border transition-all ${
                         selectedListId === list.id
-                          ? "bg-indigo-600/20 border-indigo-500 text-indigo-200"
+                          ? "bg-emerald-600/20 border-emerald-500 text-emerald-200"
                           : "bg-slate-800/60 border-slate-700/60 text-slate-200 hover:bg-slate-800"
                       } ${alreadyInList ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
@@ -368,7 +368,7 @@ export function MovieDetailPage() {
                         </span>
                       </div>
                       {alreadyInList && (
-                        <CheckCircle2 className="w-4 h-4 text-indigo-400" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                       )}
                     </button>
                   );
@@ -399,7 +399,7 @@ export function MovieDetailPage() {
                     },
                   );
                 }}
-                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white text-xs font-semibold rounded-xl transition-all shadow-md"
+                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white text-xs font-semibold rounded-xl transition-all shadow-md"
               >
                 {TEXTS.library.save}
               </button>

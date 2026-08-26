@@ -12,7 +12,7 @@ import { TEXTS } from "../texts/es.js";
 export function NotFoundPage() {
   return (
     <div className="flex flex-col items-center justify-center text-center py-20">
-      <div className="p-4 bg-indigo-500/10 rounded-full text-indigo-400 mb-6 border border-indigo-500/20">
+      <div className="p-4 bg-emerald-500/10 rounded-full text-emerald-400 mb-6 border border-emerald-500/20">
         <SearchX className="w-10 h-10" />
       </div>
 
@@ -31,7 +31,7 @@ export function NotFoundPage() {
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm rounded-xl transition-all shadow-md shadow-indigo-600/20 hover:shadow-indigo-500/40"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm rounded-xl transition-all shadow-md shadow-emerald-600/20 hover:shadow-emerald-500/40"
         >
           <Home className="w-4 h-4" />
           <span>{TEXTS.notFound.goHome}</span>

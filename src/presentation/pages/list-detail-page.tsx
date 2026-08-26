@@ -126,7 +126,7 @@ export function ListDetailPage() {
       <div className="flex flex-col gap-4 bg-slate-900/90 border border-slate-800 p-6 sm:p-8 rounded-3xl">
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div className="flex items-start gap-4">
-            <div className="p-3 bg-indigo-500/10 text-indigo-400 rounded-2xl border border-indigo-500/20 mt-1">
+            <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20 mt-1">
               <ListFilter className="w-6 h-6" />
             </div>
 
@@ -148,7 +148,7 @@ export function ListDetailPage() {
               onClick={() => setIsEditModalOpen(true)}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-all"
             >
-              <Edit3 className="w-3.5 h-3.5 text-indigo-400" />
+              <Edit3 className="w-3.5 h-3.5 text-emerald-400" />
               <span>{TEXTS.listDetail.editList}</span>
             </button>
 

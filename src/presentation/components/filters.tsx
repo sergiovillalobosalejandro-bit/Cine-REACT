@@ -59,7 +59,7 @@ export function Filters({ params, onChange }: FiltersProps) {
   return (
     <div className="flex flex-wrap items-center gap-3 p-4 bg-slate-900/90 rounded-2xl border border-slate-800 backdrop-blur-md mb-6">
       <div className="flex items-center gap-2 text-slate-400 text-xs font-semibold uppercase tracking-wider mr-1">
-        <SlidersHorizontal className="w-4 h-4 text-indigo-400" />
+        <SlidersHorizontal className="w-4 h-4 text-emerald-400" />
         <span>Filtros</span>
       </div>
 
@@ -73,7 +73,7 @@ export function Filters({ params, onChange }: FiltersProps) {
               genre: e.target.value ? Number(e.target.value) : undefined,
             })
           }
-          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-indigo-500 transition-colors"
+          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-emerald-500 transition-colors"
         >
           <option value="">{TEXTS.explore.filters.allGenres}</option>
           {GENRES.map((g) => (
@@ -94,7 +94,7 @@ export function Filters({ params, onChange }: FiltersProps) {
               year: e.target.value ? Number(e.target.value) : undefined,
             })
           }
-          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-indigo-500 transition-colors"
+          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-emerald-500 transition-colors"
         >
           <option value="">{TEXTS.explore.filters.allYears}</option>
           {YEARS.map((y) => (
@@ -117,7 +117,7 @@ export function Filters({ params, onChange }: FiltersProps) {
                 : undefined,
             })
           }
-          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-indigo-500 transition-colors"
+          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-emerald-500 transition-colors"
         >
           <option value="">{TEXTS.explore.filters.allRatings}</option>
           {MIN_RATINGS.map((r) => (
@@ -138,7 +138,7 @@ export function Filters({ params, onChange }: FiltersProps) {
               voteCountMin: e.target.value ? Number(e.target.value) : undefined,
             })
           }
-          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-indigo-500 transition-colors"
+          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-emerald-500 transition-colors"
         >
           <option value="">{TEXTS.explore.filters.allVotes}</option>
           {MIN_VOTES.map((v) => (
@@ -159,7 +159,7 @@ export function Filters({ params, onChange }: FiltersProps) {
               sortBy: e.target.value as ValidatedExploreParams["sortBy"],
             })
           }
-          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-indigo-500 transition-colors"
+          className="w-full bg-slate-800 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 px-3 py-2 focus:outline-none focus:border-emerald-500 transition-colors"
         >
           <option value="popularity">
             {TEXTS.explore.filters.sortPopularity}
@@ -181,7 +181,7 @@ export function Filters({ params, onChange }: FiltersProps) {
         <button
           type="button"
           onClick={() => onChange(DEFAULT_EXPLORE_PARAMS)}
-          className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-indigo-400 hover:text-indigo-300 text-xs font-semibold rounded-xl border border-slate-700 transition-all ml-auto"
+          className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-emerald-300 text-xs font-semibold rounded-xl border border-slate-700 transition-all ml-auto"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>{TEXTS.explore.clearFilters}</span>

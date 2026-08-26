@@ -16,7 +16,7 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center p-12 text-center bg-slate-900/40 rounded-2xl border border-slate-800/80 my-6">
-      <div className="p-4 bg-indigo-500/10 rounded-full text-indigo-400 mb-4 border border-indigo-500/20">
+      <div className="p-4 bg-emerald-500/10 rounded-full text-emerald-400 mb-4 border border-emerald-500/20">
         <Film className="w-8 h-8" />
       </div>
       <h3 className="text-lg font-semibold text-slate-200 mb-1">{title}</h3>
@@ -25,7 +25,7 @@ export function EmptyState({
         <button
           type="button"
           onClick={onAction}
-          className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm rounded-xl transition-all shadow-md shadow-indigo-600/20 hover:shadow-indigo-500/40"
+          className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm rounded-xl transition-all shadow-md shadow-emerald-600/20 hover:shadow-emerald-500/40"
         >
           {actionLabel}
         </button>

@@ -21,7 +21,7 @@ export function Poster({
         aria-label={`Póster no disponible para ${title}`}
         className={`flex flex-col items-center justify-center bg-slate-800 text-slate-400 p-4 text-center select-none ${className}`}
       >
-        <Film className="w-10 h-10 mb-2 opacity-50 text-indigo-400" />
+        <Film className="w-10 h-10 mb-2 opacity-50 text-emerald-400" />
         <span className="text-xs font-medium line-clamp-3">{title}</span>
       </div>
     );

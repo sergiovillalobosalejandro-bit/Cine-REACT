@@ -19,10 +19,10 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="p-2 bg-gradient-to-tr from-indigo-600 to-violet-500 text-white rounded-xl shadow-md shadow-indigo-600/30 group-hover:scale-105 transition-transform">
+          <div className="p-2 bg-gradient-to-tr from-emerald-600 to-violet-500 text-white rounded-xl shadow-md shadow-emerald-600/30 group-hover:scale-105 transition-transform">
             <Film className="w-5 h-5" />
           </div>
-          <span className="font-bold text-lg text-slate-100 tracking-tight group-hover:text-indigo-400 transition-colors">
+          <span className="font-bold text-lg text-slate-100 tracking-tight group-hover:text-emerald-400 transition-colors">
             {TEXTS.app.title}
           </span>
         </Link>
@@ -35,7 +35,7 @@ export function Header() {
             className={({ isActive }) =>
               `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 isActive
-                  ? "bg-indigo-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-sm"
                   : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
               }`
             }
@@ -49,7 +49,7 @@ export function Header() {
             className={({ isActive }) =>
               `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 isActive
-                  ? "bg-indigo-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-sm"
                   : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
               }`
             }
@@ -63,7 +63,7 @@ export function Header() {
             className={({ isActive }) =>
               `flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 isActive
-                  ? "bg-indigo-600 text-white shadow-sm"
+                  ? "bg-emerald-600 text-white shadow-sm"
                   : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
               }`
             }
@@ -83,7 +83,7 @@ export function Header() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={TEXTS.nav.searchPlaceholder}
-            className="w-full bg-slate-900/90 text-slate-100 placeholder-slate-500 text-xs font-medium rounded-xl border border-slate-800 pl-9 pr-3 py-2 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+            className="w-full bg-slate-900/90 text-slate-100 placeholder-slate-500 text-xs font-medium rounded-xl border border-slate-800 pl-9 pr-3 py-2 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
           />
           <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-500 pointer-events-none" />
         </form>
@@ -96,7 +96,7 @@ export function Header() {
           end
           className={({ isActive }) =>
             `flex flex-col items-center gap-1 text-[10px] font-medium ${
-              isActive ? "text-indigo-400" : "text-slate-400"
+              isActive ? "text-emerald-400" : "text-slate-400"
             }`
           }
         >
@@ -108,7 +108,7 @@ export function Header() {
           to="/explore"
           className={({ isActive }) =>
             `flex flex-col items-center gap-1 text-[10px] font-medium ${
-              isActive ? "text-indigo-400" : "text-slate-400"
+              isActive ? "text-emerald-400" : "text-slate-400"
             }`
           }
         >
@@ -120,7 +120,7 @@ export function Header() {
           to="/library"
           className={({ isActive }) =>
             `flex flex-col items-center gap-1 text-[10px] font-medium ${
-              isActive ? "text-indigo-400" : "text-slate-400"
+              isActive ? "text-emerald-400" : "text-slate-400"
             }`
           }
         >

@@ -150,7 +150,7 @@ export function ListForm({
               type="text"
               {...register("name")}
               placeholder={TEXTS.library.listNamePlaceholder}
-              className={`bg-slate-800 text-slate-100 placeholder-slate-500 p-2.5 rounded-xl border focus:outline-none focus:border-indigo-500 text-xs ${
+              className={`bg-slate-800 text-slate-100 placeholder-slate-500 p-2.5 rounded-xl border focus:outline-none focus:border-emerald-500 text-xs ${
                 errors.name
                   ? "border-rose-500 focus:border-rose-500"
                   : "border-slate-700"
@@ -182,7 +182,7 @@ export function ListForm({
               {...register("description")}
               placeholder={TEXTS.library.listDescPlaceholder}
               rows={3}
-              className={`bg-slate-800 text-slate-100 placeholder-slate-500 p-2.5 rounded-xl border resize-none focus:outline-none focus:border-indigo-500 text-xs ${
+              className={`bg-slate-800 text-slate-100 placeholder-slate-500 p-2.5 rounded-xl border resize-none focus:outline-none focus:border-emerald-500 text-xs ${
                 errors.description
                   ? "border-rose-500 focus:border-rose-500"
                   : "border-slate-700"
@@ -217,7 +217,7 @@ export function ListForm({
             <button
               type="submit"
               disabled={isPending}
-              className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl transition-all shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl transition-all shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
               <span>{TEXTS.library.save}</span>

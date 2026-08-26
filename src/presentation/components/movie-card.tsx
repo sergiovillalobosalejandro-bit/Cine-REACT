@@ -23,7 +23,7 @@ export function MovieCard({
     : null;
 
   return (
-    <div className="group relative flex flex-col bg-slate-900/80 rounded-xl overflow-hidden border border-slate-800/80 hover:border-indigo-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-1">
+    <div className="group relative flex flex-col bg-slate-900/80 rounded-xl overflow-hidden border border-slate-800/80 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-1">
       <Link
         to={`/movies/${movie.id}`}
         className="block overflow-hidden aspect-[2/3] relative"
@@ -53,7 +53,7 @@ export function MovieCard({
           }
           className={`absolute top-2 right-2 p-2 rounded-full backdrop-blur-md transition-all ${
             isSaved
-              ? "bg-indigo-600/90 text-white shadow-md shadow-indigo-600/30 scale-105"
+              ? "bg-emerald-600/90 text-white shadow-md shadow-emerald-600/30 scale-105"
               : "bg-slate-950/60 text-slate-300 hover:bg-slate-900 hover:text-white"
           }`}
         >
@@ -83,7 +83,7 @@ export function MovieCard({
         <div>
           <Link
             to={`/movies/${movie.id}`}
-            className="font-semibold text-sm text-slate-100 group-hover:text-indigo-400 transition-colors line-clamp-1"
+            className="font-semibold text-sm text-slate-100 group-hover:text-emerald-400 transition-colors line-clamp-1"
             title={movie.title}
           >
             {movie.title}

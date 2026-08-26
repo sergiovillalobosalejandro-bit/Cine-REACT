@@ -85,7 +85,7 @@ export function ExplorePage() {
       {/* Header section */}
       <div className="flex flex-col gap-2 border-b border-slate-800/80 pb-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">
+          <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
             <Compass className="w-6 h-6" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100">
@@ -142,7 +142,7 @@ export function ExplorePage() {
                 type="button"
                 onClick={() => fetchNextPage()}
                 disabled={isFetchingNextPage}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/50 disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm rounded-xl transition-all shadow-lg shadow-emerald-600/30 hover:shadow-emerald-500/50 disabled:opacity-50"
               >
                 {isFetchingNextPage ? (
                   <>

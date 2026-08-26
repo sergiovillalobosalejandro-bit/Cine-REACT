@@ -62,7 +62,7 @@ export function LibraryPage() {
       <div className="flex flex-col gap-2 border-b border-slate-800/80 pb-4">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">
+            <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
               <Bookmark className="w-6 h-6" />
             </div>
             <div>
@@ -77,7 +77,7 @@ export function LibraryPage() {
             <button
               type="button"
               onClick={() => setIsCreateModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl transition-all shadow-md shadow-indigo-600/30"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl transition-all shadow-md shadow-emerald-600/30"
             >
               <Plus className="w-4 h-4" />
               <span>{TEXTS.library.createListButton}</span>
@@ -92,7 +92,7 @@ export function LibraryPage() {
             onClick={() => setActiveTab("saved")}
             className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
               activeTab === "saved"
-                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+                ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/30"
                 : "bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800"
             }`}
           >
@@ -110,7 +110,7 @@ export function LibraryPage() {
             onClick={() => setActiveTab("lists")}
             className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
               activeTab === "lists"
-                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/30"
+                ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/30"
                 : "bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800"
             }`}
           >
@@ -158,14 +158,14 @@ export function LibraryPage() {
                 <Link
                   key={list.id}
                   to={`/library/lists/${list.id}`}
-                  className="group flex flex-col justify-between p-5 bg-slate-900/80 rounded-2xl border border-slate-800 hover:border-indigo-500/50 transition-all hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5"
+                  className="group flex flex-col justify-between p-5 bg-slate-900/80 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition-all hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-0.5"
                 >
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-bold text-slate-100 group-hover:text-indigo-400 transition-colors text-base">
+                      <h3 className="font-bold text-slate-100 group-hover:text-emerald-400 transition-colors text-base">
                         {list.name}
                       </h3>
-                      <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-indigo-400 transition-colors" />
+                      <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition-colors" />
                     </div>
                     {list.description && (
                       <p className="text-xs text-slate-400 line-clamp-2">
