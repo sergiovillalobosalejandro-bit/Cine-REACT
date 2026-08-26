@@ -36,6 +36,7 @@ export function ExplorePage() {
     isFetchingNextPage,
     isLoading,
     isError,
+    isPaused,
     refetch,
   } = useInfiniteQuery({
     queryKey: ["discover-infinite", normalizedKey],
@@ -100,8 +101,14 @@ export function ExplorePage() {
       <Filters params={validatedParams} onChange={handleFilterChange} />
 
       {/* State 1: Error State */}
-      {isError ? (
-        <ErrorState onRetry={() => refetch()} />
+      {isError || isPaused ? (
+        <ErrorState
+          title={isPaused ? TEXTS.components.offlineState.title : undefined}
+          description={
+            isPaused ? TEXTS.components.offlineState.desc : undefined
+          }
+          onRetry={() => refetch()}
+        />
       ) : isLoading ? (
         /* State 2: Loading State with Skeletons */
         <MovieGrid isLoading skeletonCount={10} />

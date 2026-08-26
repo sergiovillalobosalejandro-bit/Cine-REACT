@@ -23,6 +23,7 @@ export function SearchPage() {
     data: searchResult,
     isLoading,
     isError,
+    isPaused,
     refetch,
   } = useQuery({
     queryKey: ["search", debouncedQuery.trim(), page],
@@ -75,8 +76,14 @@ export function SearchPage() {
           <Info className="w-5 h-5 text-indigo-400 shrink-0" />
           <span>{TEXTS.search.minCharsNotice}</span>
         </div>
-      ) : isError ? (
-        <ErrorState onRetry={() => refetch()} />
+      ) : isError || isPaused ? (
+        <ErrorState
+          title={isPaused ? TEXTS.components.offlineState.title : undefined}
+          description={
+            isPaused ? TEXTS.components.offlineState.desc : undefined
+          }
+          onRetry={() => refetch()}
+        />
       ) : (
         <>
           <MovieGrid

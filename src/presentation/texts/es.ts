@@ -133,6 +133,18 @@ export const TEXTS = {
       desc: "Ocurrió un error inesperado al cargar la información.",
       retry: "Reintentar",
     },
+    offlineState: {
+      title: "Sin conexión con el servidor",
+      desc: "No pudimos contactar a TMDB. Revisa tu conexión a internet y vuelve a intentarlo.",
+    },
+  },
+  notFound: {
+    code: "404",
+    title: "Esta página no existe",
+    description:
+      "La dirección que abriste no corresponde a ninguna sección de Cineteca. Puede que el enlace esté mal escrito o que la página se haya movido.",
+    goHome: "Volver al inicio",
+    goExplore: "Explorar películas",
   },
   footer: {
     disclaimer:

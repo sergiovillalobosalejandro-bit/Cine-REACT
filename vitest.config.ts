@@ -1,9 +1,13 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [react()],
+  resolve: {
+    // Igual que en vite.config.ts: Vitest 4 corre sobre Vite 8, asi que
+    // resuelve el alias @/ de forma nativa desde tsconfig.app.json.
+    tsconfigPaths: true,
+  },
   test: {
     environment: "jsdom",
     globals: true,

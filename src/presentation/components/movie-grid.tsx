@@ -34,7 +34,23 @@ export function MovieGrid({
     );
   }
 
-  if (!movies || movies.length === 0) {
+  // "undefined" y "[]" NO significan lo mismo:
+  //   undefined -> la consulta todavia no entrego datos (arrancando,
+  //                reintentando o pausada). No sabemos si hay resultados.
+  //   []        -> la consulta respondio y no hay resultados.
+  // Confundirlos hacia que un fallo de conexion se mostrara al usuario
+  // como "no se encontraron peliculas", que es mentira.
+  if (movies === undefined) {
+    return (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+        {Array.from({ length: skeletonCount }).map((_, index) => (
+          <MovieCardSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
+
+  if (movies.length === 0) {
     return <EmptyState title={emptyTitle} description={emptyDesc} />;
   }
 

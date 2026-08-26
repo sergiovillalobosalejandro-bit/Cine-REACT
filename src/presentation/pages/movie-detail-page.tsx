@@ -40,6 +40,7 @@ export function MovieDetailPage() {
     data: movie,
     isLoading,
     isError,
+    isPaused,
     refetch,
   } = useQuery({
     queryKey: ["movie-details", idNum],
@@ -83,8 +84,14 @@ export function MovieDetailPage() {
     );
   }
 
-  if (isError || !movie) {
-    return <ErrorState onRetry={() => refetch()} />;
+  if (isError || isPaused || !movie) {
+    return (
+      <ErrorState
+        title={isPaused ? TEXTS.components.offlineState.title : undefined}
+        description={isPaused ? TEXTS.components.offlineState.desc : undefined}
+        onRetry={() => refetch()}
+      />
+    );
   }
 
   const releaseDateFormatted = movie.releaseDate

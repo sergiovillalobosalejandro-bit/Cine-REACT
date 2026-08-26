@@ -6,6 +6,7 @@ import { SearchPage } from "../pages/search-page.js";
 import { MovieDetailPage } from "../pages/movie-detail-page.js";
 import { LibraryPage } from "../pages/library-page.js";
 import { ListDetailPage } from "../pages/list-detail-page.js";
+import { NotFoundPage } from "../pages/not-found-page.js";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,12 @@ export const router = createBrowserRouter([
       {
         path: "library/lists/:listId",
         element: <ListDetailPage />,
+      },
+      {
+        // Ruta comodin: entra solo cuando ninguna de las anteriores
+        // coincidio. Va ultima a proposito.
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },

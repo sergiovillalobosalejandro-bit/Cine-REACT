@@ -12,11 +12,17 @@ import { TEXTS } from "../texts/es.js";
 export function HomePage() {
   const [timeWindow, setTimeWindow] = useState<"day" | "week">("week");
 
-  // Fetch trending movies
+  // Fetch trending movies.
+  //
+  // Ojo con isPaused: react-query pausa los reintentos cuando detecta que
+  // no hay conexion. En ese estado la consulta NO es "error" ni "cargando",
+  // asi que si la pantalla no lo contempla cae en "no hay resultados" y le
+  // hace creer al usuario que su busqueda no dio nada.
   const {
     data: trendingMovies,
     isLoading,
     isError,
+    isPaused,
     refetch,
   } = useQuery({
     queryKey: ["trending", timeWindow],
@@ -104,10 +110,15 @@ export function HomePage() {
             </button>
           </div>
         </div>
-
         {/* Movies Grid */}
-        {isError ? (
-          <ErrorState onRetry={() => refetch()} />
+        {isError || isPaused ? (
+          <ErrorState
+            title={isPaused ? TEXTS.components.offlineState.title : undefined}
+            description={
+              isPaused ? TEXTS.components.offlineState.desc : undefined
+            }
+            onRetry={() => refetch()}
+          />
         ) : (
           <MovieGrid
             movies={trendingMovies}

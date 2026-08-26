@@ -2,9 +2,9 @@ import { AlertTriangle, RefreshCw } from "lucide-react";
 import { TEXTS } from "../texts/es.js";
 
 interface ErrorStateProps {
-  title?: string;
-  description?: string;
-  onRetry?: () => void;
+  title?: string | undefined;
+  description?: string | undefined;
+  onRetry?: (() => void) | undefined;
 }
 
 export function ErrorState({
